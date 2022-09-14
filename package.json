@@ -5,5 +5,25 @@
   "main": "index.js",
   "author": "AHQ Softwares",
   "license": "ISC",
-  "private": false
+  "private": false,
+  "type": "commonjs",
+  "dependencies": {
+    "@vercel/ncc": "^0.34.0",
+    "chalk": "^3.0.0-beta.2",
+    "cryptr": "^6.0.3",
+    "inquirer": "8.2.4"
+  },
+  "scripts": {
+    "test": "tsc -b && node test",
+    "build": "tsc -b",
+    "auto": "tsc -b --watch"
+  },
+  "bin": {
+    "encryptor": "./bin/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.18",
+    "tsm": "^2.2.2",
+    "typescript": "^4.8.3"
+  }
 }
