@@ -31,11 +31,11 @@ jobs:
       run: yarn install
     - name: Install binary
       run: npm i . -g
-    - name: Fast compile test
-      run: encryptor compile index.ts --fast
+    - name: Small file compile test
+      run: encryptor compile index.ts --small
     - name: General compile test
       run: encryptor compile index.ts
-    - name: Fast compile test (big file)
-      run: encryptor compile src/index.js --fast
+    - name: Small file compile test (big file)
+      run: encryptor compile src/index.js --small
     - name: General compile test (big file)
       run: encryptor compile src/index.js

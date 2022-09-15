@@ -1,6 +1,6 @@
 {
   "name": "fileencryptor.js",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "The best way to share your codespaces (with protection)",
   "main": "index.js",
   "author": "AHQ Softwares",

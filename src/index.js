@@ -60,9 +60,13 @@ Decompiler Options:-
          if (args["bin"][0] === "compile") 
          {
                   function log(data) {
-                           process.stdout.clearLine(0);
-                           process.stdout.cursorTo(0);
-                           process.stdout.write(data);
+                           try {
+                                    global.process.stdout.clearLine(0);
+                                    global.process.stdout.cursorTo(0);
+                                    global.process.stdout.write(data);
+                           } catch (e) {
+                                    console.log(data);
+                           }
                   }
 
                   process.stdout.write(chalk`{yellow Please Wait...}`);
@@ -76,7 +80,8 @@ Decompiler Options:-
                            const data = String(readFileSync(`${process.cwd()}/${args["bin"][1]}`));
                            let config = {
                                     key: "1234",
-                                    fast: false
+                                    fast: false,
+                                    cache: false
                            };
                            try {
                                     config = JSON.parse(readFileSync(`${process.cwd()}/encryptor.config.json`));
@@ -91,11 +96,11 @@ Decompiler Options:-
                            if (args["outDir"]) {
                                     config.outDir = String(args["outDir"]);
                            }
-                           config.progress = function(progress, status) {
+                           config.progress = function(progress, status, cached) {
                                     log(chalk`{yellow Compiling: ${Math.round(progress)}% complete} {green ${status}}`);
 
-                                    if (progress === 100) {
-                                             log(chalk`{green Done! Your code has been encrypted}\n\n{red Key: ${config.key}}\n{yellow NOTE}\nYou can customise key in encryptor.config.json`)
+                                    if (typeof(cached) === "number") {
+                                             log(chalk`{green Done! Your code has been encrypted}\n\n{green Compiled ${cached} fragments}\n\n{red Key: ${config.key}}\n{yellow NOTE}\nYou can customise key in encryptor.config.json`)
                                     }
                            };
 
@@ -110,9 +115,13 @@ Decompiler Options:-
          if (args["bin"][0] === "decrypt")
          {
                   function log(data) {
-                           process.stdout.clearLine(0);
-                           process.stdout.cursorTo(0);
-                           process.stdout.write(data);
+                           try {
+                                    global.process.stdout.clearLine(0);
+                                    global.process.stdout.cursorTo(0);
+                                    global.process.stdout.write(data);
+                           } catch (e) {
+                                    console.log(data);
+                           }
                   }
 
                   const answers = await inquirer
@@ -140,18 +149,19 @@ Decompiler Options:-
                            const data = String(readFileSync(`${process.cwd()}/${args["bin"][1]}`));
                            let config = {
                                     key: answers.key,
-                                    fast: false
+                                    fast: false,
+                                    cache: false
                            };
 
                            config.file = args["bin"][1];
                            if (args["outDir"]) {
                                     config.outDir = String(args["outDir"]);
                            }
-                           config.progress = function(progress) {
-                                    log(chalk`{yellow Decrypting: ${Math.round(progress)}% complete}`);
+                           config.progress = function(progress, status, completed) {
+                                    log(chalk`{yellow Decrypting: ${Math.round(progress)}% complete} {green ${status}}`);
 
-                                    if (progress === 100) {
-                                             log(chalk`{green Done! Your code has been decrypted}\n\n{red Key: ${config.key}}`);
+                                    if (completed) {
+                                             log(chalk`{green Done! Your code has been decrypted}\n\n{green Compiled ${completed} modules}\n\n{red Key: ${config.key}}`);
                                     }
                            };
 
@@ -170,9 +180,13 @@ Decompiler Options:-
          (args["bin"][0] == "init") 
          {
                   function log(data) {
-                           process.stdout.clearLine(0);
-                           process.stdout.cursorTo(0);
-                           process.stdout.write(data);
+                           try {
+                                    global.process.stdout.clearLine(0);
+                                    global.process.stdout.cursorTo(0);
+                                    global.process.stdout.write(data);
+                           } catch (e) {
+                                    console.log(data);
+                           }
                   }
                   const answers = await inquirer
                   .prompt([
@@ -187,12 +201,19 @@ Decompiler Options:-
                                     name: "fast",
                                     message: chalk.yellow("Fast compile? (Leads to higher security risks)"),
                                     default: false
+                           },
+                           {
+                                    type: "confirm",
+                                    name: "cache",
+                                    message: chalk.red("Cache compile? (The cache file should not be leaked in public)"),
+                                    default: false
                            }
                   ]);
 
                   const options = {
                            key: answers.key,
-                           fast: answers.fast
+                           fast: answers.fast,
+                           cache: answers.cache
                   };
 
                   try {
@@ -206,4 +227,4 @@ Decompiler Options:-
          {
                   console.log(chalk`{red Command Not Found!}\n{green Please check the help menu (encryptor help)}`);
          }
-})()
+})() 
