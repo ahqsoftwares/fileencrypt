@@ -17,8 +17,9 @@ module.exports = function decrypt(data: string, {file, key, progress}: Props) {
                   const fragment = fragments[i];
                   result.push(decrypt(fragment));
 
-                  progress(Math.round(((i + 1) / fragments.length) * 100));
+                  progress(Math.round(((i + 1) / fragments.length) * 100), `(${i} / ${fragments.length})`);
          }
-
-         writeFileSync(`${process.cwd()}/${file}`, result.join(""));
+         let fileFrag = file.split(".");
+         fileFrag.splice(fileFrag.length - 1, 1);
+         writeFileSync(`${process.cwd()}/${fileFrag.join(".")}`, result.join(""));
 }

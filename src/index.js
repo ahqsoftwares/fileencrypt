@@ -147,8 +147,8 @@ Decompiler Options:-
                            if (args["outDir"]) {
                                     config.outDir = String(args["outDir"]);
                            }
-                           config.progress = function(progress, status) {
-                                    log(chalk`{yellow Decrypting: ${Math.round(progress)}% complete} {green ${status}}`);
+                           config.progress = function(progress) {
+                                    log(chalk`{yellow Decrypting: ${Math.round(progress)}% complete}`);
 
                                     if (progress === 100) {
                                              log(chalk`{green Done! Your code has been decrypted}\n\n{red Key: ${config.key}}`);

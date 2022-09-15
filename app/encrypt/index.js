@@ -6,7 +6,7 @@ module.exports = function encrypt(data, { file, key, fast, outDir, progress }) {
     let output = [];
     for (let i = 0; i < fragments.length; i++) {
         output[i] = `${encrypt(fragments[i] + (fast ? " " : ""))}${(i + 1 == fragments.length) ? "" : ":"}`;
-        progress(Math.round(((i + 1) / fragments.length) * 100));
+        progress(Math.round(((i + 1) / fragments.length) * 100), `(${i}/${fragments.length})`);
     }
     writeFileSync(`${process.cwd()}${outDir ? `/${outDir}` : ""}/${file}.encrypted`, output.join(""));
 };

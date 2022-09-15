@@ -7,7 +7,9 @@ module.exports = function decrypt(data, { file, key, progress }) {
     for (let i = 0; i < fragments.length; i++) {
         const fragment = fragments[i];
         result.push(decrypt(fragment));
-        progress(Math.round(((i + 1) / fragments.length) * 100));
+        progress(Math.round(((i + 1) / fragments.length) * 100), `(${i} / ${fragments.length})`);
     }
-    writeFileSync(`${process.cwd()}/${file}`, result.join(""));
+    let fileFrag = file.split(".");
+    fileFrag.splice(fileFrag.length - 1, 1);
+    writeFileSync(`${process.cwd()}/${fileFrag.join(".")}`, result.join(""));
 };
