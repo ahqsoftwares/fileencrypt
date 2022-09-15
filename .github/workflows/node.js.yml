@@ -17,7 +17,6 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x, 16.x, 18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v3
@@ -26,7 +25,17 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install yarn -g
-    - run: yarn install
-    - run: npm i . -g
-    - run: encryptor compile src/index.js
+    - name: Install yarn
+      run: npm install yarn -g
+    - name: Install Deps
+      run: yarn install
+    - name: Install binary
+      run: npm i . -g
+    - name: Fast compile test
+      run: encryptor compile index.ts --fast
+    - name: General compile test
+      run: encryptor compile index.ts
+    - name: Fast compile test (big file)
+      run: encryptor compile src/index.js --fast
+    - name: General compile test (big file)
+      run: encryptor compile src/index.js
