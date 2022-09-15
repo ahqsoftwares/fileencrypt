@@ -60,9 +60,9 @@ Decompiler Options:-
          if (args["bin"][0] === "compile") 
          {
                   function log(data) {
-                           process.stdout.clearLine(0);
-                           process.stdout.cursorTo(0);
-                           process.stdout.write(data);
+                           global.process.stdout.clearLine(0);
+                           global.process.stdout.cursorTo(0);
+                           global.process.stdout.write(data);
                   }
 
                   process.stdout.write(chalk`{yellow Please Wait...}`);
@@ -110,9 +110,9 @@ Decompiler Options:-
          if (args["bin"][0] === "decrypt")
          {
                   function log(data) {
-                           process.stdout.clearLine(0);
-                           process.stdout.cursorTo(0);
-                           process.stdout.write(data);
+                           global.process.stdout.clearLine(0);
+                           global.process.stdout.cursorTo(0);
+                           global.process.stdout.write(data);
                   }
 
                   const answers = await inquirer
@@ -170,9 +170,9 @@ Decompiler Options:-
          (args["bin"][0] == "init") 
          {
                   function log(data) {
-                           process.stdout.clearLine(0);
-                           process.stdout.cursorTo(0);
-                           process.stdout.write(data);
+                           global.process.stdout.clearLine(0);
+                           global.process.stdout.cursorTo(0);
+                           global.process.stdout.write(data);
                   }
                   const answers = await inquirer
                   .prompt([
