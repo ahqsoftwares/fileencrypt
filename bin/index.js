@@ -60,9 +60,13 @@ Decompiler Options:-
          if (args["bin"][0] === "compile") 
          {
                   function log(data) {
-                           global.process.stdout.clearLine(0);
-                           global.process.stdout.cursorTo(0);
-                           global.process.stdout.write(data);
+                           try {
+                                    global.process.stdout.clearLine(0);
+                                    global.process.stdout.cursorTo(0);
+                                    global.process.stdout.write(data);
+                           } catch (e) {
+                                    console.log(data);
+                           }
                   }
 
                   process.stdout.write(chalk`{yellow Please Wait...}`);
@@ -110,9 +114,13 @@ Decompiler Options:-
          if (args["bin"][0] === "decrypt")
          {
                   function log(data) {
-                           global.process.stdout.clearLine(0);
-                           global.process.stdout.cursorTo(0);
-                           global.process.stdout.write(data);
+                           try {
+                                    global.process.stdout.clearLine(0);
+                                    global.process.stdout.cursorTo(0);
+                                    global.process.stdout.write(data);
+                           } catch (e) {
+                                    console.log(data);
+                           }
                   }
 
                   const answers = await inquirer
